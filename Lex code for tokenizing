@@ -1,0 +1,43 @@
+%{
+#include<stdio.h>
+%}
+
+/*Rule Section*/
+
+%%
+/*Check the token, if token is match with pattern 
+then it will print KEYWORD.*/
+auto|double|int|struct|break|else|long|switch
+|case|enum|register|typedef|char|extern|return
+|union|continue|for|signed|void|do|if|static
+|while|default|goto|sizeof|volatile|const|float
+|short     {ECHO; printf("\nKEYWORD\n");} 						
+/*Check the token, if token is match with pattern 
+then it will print SEPERATOR.*/
+[{};,()]   {ECHO; printf("\tSEPERATOR\t");}						
+/*Check the token, if token is match with pattern 
+then it will print OPERATOR.*/
+[+-/=*%]   {ECHO; printf("\tOPERATOR\t");}						
+/*Check the token, if token is match with pattern 
+then it will print IDENTIFIER.*/
+([a-zA-Z][0-9])+|[a-zA-Z]* {ECHO; printf("\tIdentifier\t");}    
+/*No action*/
+.|\n ; 															
+%%
+
+/*call the yywrap function*/
+int yywrap()								
+{
+return 1;
+}
+
+
+/*Auxiliary function*/
+/*Driver function*/
+
+int main(void)
+{
+/*call the yylex function.*/
+yylex();
+return 0;
+}
