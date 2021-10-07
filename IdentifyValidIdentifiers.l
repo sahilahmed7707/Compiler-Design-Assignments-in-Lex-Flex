@@ -1,29 +1,25 @@
-/*** Definition Section has one variable
-which can be accessed inside yylex()
-and main() ***/
+/* Definition section */
 %{
-int flag = 0;
 %}
- 
-/*** Rule Section has five rules, first rule
-matches with a valid identifier, second, third and fourth rule matches with invalid identifier and
-fifth rule does not take input after the enter
-***/
-%%
-[a-z A-Z _][a-z A-Z 0-9 _]* {flag = 1;}
-[^a-z A-Z _ \n][a-z A-Z 0-9 _]* {flag = 0;}
-[a-z A-Z _][^a-z A-Z 0-9 _  \n]* {flag = 0;}
-[^a-z A-Z _ \n][^a-z A-Z 0-9 _ \n]* {flag = 0;}
-\n    {return 0;}
-%%
- 
-/*** Code Section prints the number of
-vowels and consonants present in the given input***/
-int yywrap(){}
-int main(){
- 
-yylex();
 
-printf(flag?"Valid Identifier\n":"Invalid Identifier\n");
-return 0;
+/*Rule Section*/
+%%
+
+// Keywords are not allowed to be used as Identifiers.
+double|auto|int|struct|break|else|long|switch|case|enum|register|typedef|char|extern|return|union|continue|for|signed|void|do|if|static|while|default|goto|sizeof|volatile|const|float|short|unsigned {printf("Invalid Identifier\n");}
+
+// An Identifier can only have alphanumeric characters(a-z , A-Z , 0-9) and underscore(_).The first character of an identifier can only contain the alphabet(a-z, A-Z) or underscore (_).
+^[a-zA-Z_][a-zA-Z0-9_]* {printf("Valid Identifier\n");}
+
+// No special characters, such as a semicolon, period, whitespaces, slash, or comma are permitted to be used in or as an Identifier.
+^[^a-zA-Z_] {printf("Invalid Identifier\n");}
+
+. {}
+%%
+
+int yywrap(){}
+
+int main(){
+  yylex();
+  return 0;
 }
