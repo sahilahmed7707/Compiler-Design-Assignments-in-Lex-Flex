@@ -23,3 +23,9 @@ gcc lex.yy.c
 Read the given input string.
 Check if there exists a number, if yes, convert it to binary using conventional method, and store it in a character array.
 End if new line is reached.
+
+## 2. Length of Longest Word (LengthOfLongestWord.l)
+Read the given input string.
+Check each word and store its length using yyleng in a max variable if its greater than previous value
+End if new line is reached.
+
